@@ -5,7 +5,7 @@ spring:
       on-profile: dev
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DATABASE.ENDPOINT_URL}:5432/postgres
+    url: jdbc:postgresql://${DATABASE.ENDPOINT_URL}:5432/postgres?currentSchema=${DATABASE.NAME}
     username: ${DATABASE.USERNAME}
     password: ${DATABASE.PASSWORD}
   jpa:
