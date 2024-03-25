@@ -5,9 +5,9 @@ spring:
       on-profile: dev
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DATABASE.ENDPOINT_URL}:5432/postgres?currentSchema=${DATABASE.NAME}
-    username: ${DATABASE.USERNAME}
-    password: ${DATABASE.PASSWORD}
+    url: jdbc:postgresql://${DATABASE.ENDPOINT_URL.dev}:5432/postgres?currentSchema=${DATABASE.NAME.dev}
+    username: ${DATABASE.USERNAME.dev}
+    password: ${DATABASE.PASSWORD.dev}
   jpa:
     hibernate:
       ddl-auto: none
