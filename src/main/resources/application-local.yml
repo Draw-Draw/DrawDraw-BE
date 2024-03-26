@@ -17,3 +17,8 @@ spring:
         default_batch_fetch_size: 1000
         auto_quote_keyword: true
 
+jwt:
+  secret: ${JWT.SECRET}
+  KAKAO_URL: https://kapi.kakao.com/v2/user/me
+  ACCESS_TOKEN_EXPIRED: 7200000
+  REFRESH_TOKEN_EXPIRED: 1209600000
