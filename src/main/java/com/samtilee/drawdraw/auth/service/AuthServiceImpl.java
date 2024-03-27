@@ -9,6 +9,7 @@ import com.samtilee.drawdraw.auth.jwt.UserAuthentication;
 import com.samtilee.drawdraw.auth.vo.Token;
 import com.samtilee.drawdraw.common.config.ValueConfig;
 import com.samtilee.drawdraw.member.entity.Member;
+import com.samtilee.drawdraw.member.exception.MemberException;
 import com.samtilee.drawdraw.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -22,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
 import static com.samtilee.drawdraw.auth.message.ErrorMessage.INVALID_TOKEN;
+import static com.samtilee.drawdraw.member.message.ErrorMessage.INVALID_MEMBER;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +42,13 @@ public class AuthServiceImpl implements AuthService {
         val member = getMember(socialAccessToken);
         val token = getToken(member);
         return SignInResponse.of(token);
+    }
+
+    @Override
+    @Transactional
+    public void signOut(long memberId) {
+        val member = findMember(memberId);
+        member.resetRefreshToken();
     }
 
     private Member getMember(String socialAccessToken) {
@@ -82,5 +91,10 @@ public class AuthServiceImpl implements AuthService {
                 .accessToken(jwtTokenProvider.generateToken(authentication, valueConfig.getAccessTokenExpired()))
                 .refreshToken(jwtTokenProvider.generateToken(authentication, valueConfig.getRefreshTokenExpired()))
                 .build();
+    }
+
+    private Member findMember(long id) {
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new MemberException(INVALID_MEMBER));
     }
 }
