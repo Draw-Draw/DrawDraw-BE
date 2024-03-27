@@ -42,6 +42,10 @@ public class Member extends BaseTime {
         this.refreshToken = refreshToken;
     }
 
+    public void resetRefreshToken() {
+        this.refreshToken = null;
+    }
+
     public void setName(String name) {
         if (Objects.nonNull(this.name)) {
             throw new MemberException(EXIST_PROFILE);
